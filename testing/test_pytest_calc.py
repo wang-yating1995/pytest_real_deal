@@ -1,17 +1,20 @@
-import string
-from unicodedata import decimal
 
 from pytest_real_deal01.calc import Calc
 import pytest
-from common.base_method import BaseMethod
+from common.base_method import open_yaml
+
+# def steps():
+
 
 
 class TestCalc():
     def setup(self):
         self.calc = Calc()
 
-    @pytest.mark.parametrize(['a','b','c'],BaseMethod().open_yaml('..\data\calc_add_data.yml'))
-    def test_add(self,a,b,c):
+    # @pytest.mark.run(order=3)
+    @pytest.mark.add
+    @pytest.mark.parametrize(['a','b','c'],open_yaml('..\data\calc_add_data.yml'))
+    def add_test(self,a,b,c):
         try:
             result = self.calc.add(a, b)
             assert c == result
@@ -21,7 +24,9 @@ class TestCalc():
         except TypeError as e2:
             assert c == '类型错误：a,b不能为string类型'
 
-    @pytest.mark.parametrize(['a', 'b', 'c'], BaseMethod().open_yaml('..\data\calc_sub_data.yml'))
+
+    # @pytest.mark.run(order=1)
+    @pytest.mark.parametrize(['a', 'b', 'c'], open_yaml('..\data\calc_sub_data.yml'))
     def test_sub(self,a,b,c):
         try:
             result = self.calc.sub(a, b)
@@ -32,7 +37,9 @@ class TestCalc():
         except TypeError as e2:
             assert c == '类型错误：a,b不能为string类型'
 
-    @pytest.mark.parametrize(['a', 'b', 'c'], BaseMethod().open_yaml('..\data\calc_mul_data1.yml'))
+
+    # @pytest.mark.run(order=4)
+    @pytest.mark.parametrize(['a', 'b', 'c'], open_yaml('..\data\calc_mul_data1.yml'))
     def test_mul(self,a,b,c):
         try:
             result = self.calc.mul(a, b)
@@ -43,8 +50,9 @@ class TestCalc():
         except TypeError as e2:
             assert c == 'TypeError'
 
-    @pytest.mark.parametrize(['a','b','c'],BaseMethod().open_yaml('../data/calc_div_data.yml'))
-    def test_div(self,a,b,c):
+    # @pytest.mark.run(order=3)
+    @pytest.mark.parametrize(['a','b','c'],open_yaml('../data/calc_div_data.yml'))
+    def div_test(self,a,b,c):
         try:
             result = self.calc.div(a, b)
             assert c == result
